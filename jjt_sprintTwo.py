@@ -51,20 +51,26 @@ for i in range( 0, len(ust) ):
 
 # print suggest
 
+# data = map( float, data )
+# suggest = map( float, suggest )
 data_np = np.array( data )
-# suggest_np = np.array( suggest )
-suggest = map( int, suggest )
+suggest_np = np.array( suggest )
+data_np = data_np.astype( np.float )
+suggest_np = suggest_np.astype( np.float )
 
-x_train, x_test, y_train, y_test = data_np[:11000], data_np[11000:], suggest[:11000], suggest[11000:]
+x_train, x_test, y_train, y_test = data_np[:11000], data_np[11000:], suggest_np[:11000], suggest_np[11000:]
+# x_train, x_test, y_train, y_test = data[:11000], data[11000:], suggest[:11000], suggest[11000:]
 sgd_clf = SGDClassifier( random_state=42 )
 sgd_clf.fit( x_train, y_train )
 
 print "\nHello, World"
 
 print data[0]
-# sgd_clf.predict(  [np.array['4.06', '5.8', '30.04']] )
+# sgd_clf.predict( [data[0]] )
 
 from sklearn.model_selection import cross_val_score
-cross_val_score(sgd_clf, x_train, y_train, cv=3, scoring="accuracy")
+score = cross_val_score(sgd_clf, x_train, y_train, cv=3, scoring="accuracy")
 
+print "\n\n\n"
+print score
 fl.close()
